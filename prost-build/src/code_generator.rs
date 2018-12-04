@@ -562,7 +562,7 @@ impl<'a> CodeGenerator<'a> {
         self.append_doc();
         self.push_indent();
         self.buf.push_str(
-            "#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]\n",
+            "#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration, Enum)]\n",
         );
         self.push_indent();
         self.buf.push_str("#[repr(i32)]\n");
@@ -626,15 +626,14 @@ impl<'a> CodeGenerator<'a> {
         let comments = Comments::from_location(self.location());
 
         self.path.push(2);
-        let methods = service
-            .method
-            .into_iter()
-            .enumerate()
-            .map(|(idx, mut method)| {
-                debug!("  method: {:?}", method.name());
-                self.path.push(idx as i32);
-                let comments = Comments::from_location(self.location());
-                self.path.pop();
+        let methods = service.method
+                             .into_iter()
+                             .enumerate()
+                             .map(|(idx, mut method)| {
+                                 debug!("  method: {:?}", method.name());
+                                 self.path.push(idx as i32);
+                                 let comments = Comments::from_location(self.location());
+                                 self.path.pop();
 
                 let name = method.name.take().unwrap();
                 let input_proto_type = method.input_type.take().unwrap();
