@@ -33,6 +33,7 @@ exclude = [
 [dependencies]
 byteorder = "1"
 bytes = "0.4.7"
+enum-map = "0.4.1"
 
 [dev-dependencies]
 criterion = "0.2"
